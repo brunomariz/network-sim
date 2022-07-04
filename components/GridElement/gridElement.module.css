@@ -1,0 +1,53 @@
+.baseContainerElement {
+  @apply w-7 h-7 flex items-center justify-center;
+}
+
+.baseInnerElement {
+  @apply rounded-full bg-gray-200 w-1/2 h-1/2;
+}
+
+.clickedElement {
+  @apply scale-100 bg-opacity-100 w-4/5 h-4/5;
+}
+
+.nodeElement {
+  @apply w-4/5 h-4/5 rounded-none bg-blue-900;
+}
+
+.linkElement {
+  @apply bg-opacity-50;
+}
+
+.tpElement {
+  background: #053234;
+  @apply linkElement opacity-50;
+}
+.justTransmittedLink {
+  @apply opacity-[55%];
+}
+.transmittingLink {
+  @apply opacity-100;
+}
+.corruptedLink {
+  filter: invert(100%);
+}
+
+.animate {
+  animation: appear-anim 3s;
+}
+
+@keyframes appear-anim {
+  0% {
+    background-color: blue;
+  }
+  25% {
+    transform: scale(120%);
+  }
+  50% {
+    background-color: purple;
+  }
+  75% {
+  }
+  100% {
+  }
+}
