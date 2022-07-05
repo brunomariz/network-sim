@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Air } from "../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../@types/networkFeatures/networkFeature";
 import { Position } from "../../@types/utils/position";
 import { isCorrupted } from "../../model/networkFeatures/networkFeature/isCorrupted";
 import { selectSelectedFeature } from "../../redux/features/cursor/cursorSlice";
 import { elementChanged } from "../../redux/features/simulation/simulationSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-// import { TransmissionStatus } from "../../@types/transmissionStatus";
-// import Link from "../../classes/Link";
-// import NetworkFeature from "../../classes/NetworkFeature";
-// import Node from "../../classes/Node";
-// import TwistedPair from "../../classes/TwistedPair";
 import CtxMenu from "../CtxMenu/CtxMenu";
 import styles from "./gridElement.module.css";
 
