@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Air } from "../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../@types/networkFeatures/networkFeature";
 import { Position } from "../../@types/utils/position";
-import { isCorrupted } from "../../model/networkFeature/isCorrupted";
+import { isCorrupted } from "../../model/networkFeatures/networkFeature/isCorrupted";
 import { selectSelectedFeature } from "../../redux/features/cursor/cursorSlice";
 import { elementChanged } from "../../redux/features/simulation/simulationSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -46,7 +46,7 @@ function GridElement({ networkFeature, position }: Props) {
       " " +
       (featureName == "TwistedPair" && styles.tpElement) +
       " " +
-      (networkFeature.transmitting &&
+      (networkFeature.signals.length > 0 &&
         featureName == "TwistedPair" &&
         styles.transmittingLink) +
       " " +

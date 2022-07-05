@@ -1,4 +1,4 @@
-import { TwistedPair } from "../../@types/networkFeatures/twistedPair";
+import { TwistedPair } from "../../../@types/networkFeatures/twistedPair";
 
 export const getTwistedPair = () => {
   return {

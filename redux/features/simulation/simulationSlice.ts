@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Air } from "../../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
-import { Position } from "../../../@types/utils/position";
 import { Signal } from "../../../@types/utils/singal";
 import type { RootState } from "../../store";
 
@@ -11,11 +10,17 @@ interface SimulationState {
   grid: NetworkFeature[][];
 }
 
+const initialRows = 10;
+const initialColumns = 25;
+
 // Define the initial state using that type
 const initialState: SimulationState = {
   running: false,
-  grid: new Array(3).fill(
-    new Array(3).fill({ featureName: "Air", signals: [{} as Signal] } as Air)
+  grid: new Array(initialRows).fill(
+    new Array(initialColumns).fill({
+      featureName: "Air",
+      signals: [{} as Signal],
+    } as Air)
   ),
 };
 
@@ -45,14 +50,14 @@ export const simulationSlice = createSlice({
       const element = action.payload.networkFeature;
       state.grid[row][column] = element;
     },
-    elementTransmitting: (state, action: PayloadAction<Position>) => {
-      const { row, column } = action.payload;
-      state.grid[row][column].transmitting = true;
-    },
-    elementNotTransmitting: (state, action: PayloadAction<Position>) => {
-      const { row, column } = action.payload;
-      state.grid[row][column].transmitting = false;
-    },
+    // elementTransmitting: (state, action: PayloadAction<Position>) => {
+    //   const { row, column } = action.payload;
+    //   state.grid[row][column].transmitting = true;
+    // },
+    // elementNotTransmitting: (state, action: PayloadAction<Position>) => {
+    //   const { row, column } = action.payload;
+    //   state.grid[row][column].transmitting = false;
+    // },
   },
 });
 
@@ -60,8 +65,8 @@ export const {
   start,
   stop,
   elementChanged,
-  elementNotTransmitting,
-  elementTransmitting,
+  // elementNotTransmitting,
+  // elementTransmitting,
 } = simulationSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

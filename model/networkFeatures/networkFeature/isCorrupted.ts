@@ -1,4 +1,4 @@
-import { NetworkFeature } from "../../@types/networkFeatures/networkFeature";
+import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
 
 export const isCorrupted = (networkFeature: NetworkFeature) => {
   return networkFeature.signals.reduce((acc, curr) => {

@@ -1,4 +1,4 @@
-import { Direction } from "../../@types/utils/direction";
+import { Direction } from "../../../@types/utils/direction";
 import { isCorrupted } from "./isCorrupted";
 
 test("gets corrupted status for twisted pair, multiple signals, transmitting", () => {
@@ -12,7 +12,7 @@ test("gets corrupted status for twisted pair, multiple signals, transmitting", (
         { corrupted: true, value: 1.2, fromDirection: Direction.bottom },
         { corrupted: false, value: 4, fromDirection: Direction.left },
       ],
-      transmitting: true,
+      // transmitting: true,
     })
   ).toBe(true);
 });
@@ -25,7 +25,7 @@ test("gets corrupted status for twisted pair, one signal, corrupted, transmittin
       signals: [
         { corrupted: true, value: 1.2, fromDirection: Direction.bottom },
       ],
-      transmitting: true,
+      // transmitting: true,
     })
   ).toBe(true);
 });
@@ -38,7 +38,7 @@ test("gets corrupted status for twisted pair, one signal, corrupted, not transmi
       signals: [
         { corrupted: true, value: 1.2, fromDirection: Direction.bottom },
       ],
-      transmitting: false,
+      // transmitting: false,
     })
   ).toBe(true);
 });
@@ -51,7 +51,7 @@ test("gets corrupted status for twisted pair, one signal, not corrupted, transmi
       signals: [
         { corrupted: false, value: 1.2, fromDirection: Direction.bottom },
       ],
-      transmitting: true,
+      // transmitting: true,
     })
   ).toBe(false);
 });
@@ -64,7 +64,7 @@ test("gets corrupted status for twisted pair, one signal, not corrupted, not tra
       signals: [
         { corrupted: false, value: 1.2, fromDirection: Direction.bottom },
       ],
-      transmitting: false,
+      // transmitting: false,
     })
   ).toBe(false);
 });

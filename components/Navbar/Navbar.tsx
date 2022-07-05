@@ -2,9 +2,9 @@ import React from "react";
 import { BsCircle, BsCircleFill, BsSquareFill } from "react-icons/bs";
 import { CgTrashEmpty } from "react-icons/cg";
 import { FiPause, FiPlay } from "react-icons/fi";
-import { getAir } from "../../model/air/getAir";
-import { getNode } from "../../model/node/getNode";
-import { getTwistedPair } from "../../model/twistedPair/getTwistedPair";
+import { getAir } from "../../model/networkFeatures/air/getAir";
+import { getNode } from "../../model/networkFeatures/node/getNode";
+import { getTwistedPair } from "../../model/networkFeatures/twistedPair/getTwistedPair";
 import { selectedFeatureChanged } from "../../redux/features/cursor/cursorSlice";
 // import { networkFeatureCategories } from "../../@types/networkFeatureCategories";
 // import {

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Air } from "../../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
-import { getAir } from "../../../model/air/getAir";
+import { getAir } from "../../../model/networkFeatures/air/getAir";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state

@@ -3,12 +3,14 @@ import { Link } from "../../@types/networkFeatures/link";
 import { NetworkFeature } from "../../@types/networkFeatures/networkFeature";
 import { Coordinates } from "../../@types/utils/coordinates";
 import { Position } from "../../@types/utils/position";
-import { getSignal } from "../../model/networkFeature/getSignal";
-import { isCorrupted } from "../../model/networkFeature/isCorrupted";
+import { Signal } from "../../@types/utils/singal";
+import { isCorrupted } from "../../model/networkFeatures/networkFeature/isCorrupted";
+import { signalStrength } from "../../model/networkFeatures/networkFeature/signalStrength";
+import { getSignal } from "../../model/utils/signal/getSignal";
 import {
   elementChanged,
-  elementNotTransmitting,
-  elementTransmitting,
+  // elementNotTransmitting,
+  // elementTransmitting,
 } from "../../redux/features/simulation/simulationSlice";
 import { useAppDispatch } from "../../redux/hooks";
 // import { TransmissionStatus } from "../../@types/transmissionStatus";
@@ -31,10 +33,20 @@ function CtxMenu({
   const dispatch = useAppDispatch();
 
   const handleSetTransmissionClick = () => {
-    if (networkFeature.transmitting) {
-      dispatch(elementNotTransmitting(position));
+    if (networkFeature.signals.length > 0) {
+      dispatch(
+        elementChanged({
+          networkFeature: { ...networkFeature, signals: [] },
+          position,
+        })
+      );
     } else {
-      dispatch(elementTransmitting(position));
+      dispatch(
+        elementChanged({
+          networkFeature: { ...networkFeature, signals: [getSignal()] },
+          position,
+        })
+      );
     }
     setShowCtxMenu(false);
   };
@@ -47,7 +59,7 @@ function CtxMenu({
         {networkFeature.featureName}
       </h1>
       <div className="font-mono">
-        Signal: {getSignal(networkFeature)} V
+        Signal: {signalStrength(networkFeature)} V
         {isCorrupted(networkFeature) && (
           <div className="text-red-500">corrupted</div>
         )}
@@ -68,7 +80,7 @@ function CtxMenu({
         className="text-sm bg-slate-300 p-1 underline-offset-2 border-2 border-gray-900 border-opacity-0 hover:border-opacity-75"
         onClick={() => handleSetTransmissionClick()}
       >
-        Set Transmission {networkFeature.transmitting ? "Off" : "On"}
+        Set Transmission {networkFeature.signals.length > 0 ? "Off" : "On"}
       </button>
     </div>
   );
