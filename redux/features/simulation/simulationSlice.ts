@@ -47,7 +47,7 @@ export const simulationSlice = createSlice({
   },
 });
 
-export const { start, stop } = simulationSlice.actions;
+export const { start, stop, elementChanged } = simulationSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectRunning = (state: RootState) => state.simulation.running;

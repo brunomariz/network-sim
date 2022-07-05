@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Air } from "../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../@types/networkFeatures/networkFeature";
 import { Position } from "../../@types/utils/position";
+import { selectSelectedFeature } from "../../redux/features/cursor/cursorSlice";
+import { elementChanged } from "../../redux/features/simulation/simulationSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 // import { TransmissionStatus } from "../../@types/transmissionStatus";
 // import Link from "../../classes/Link";
 // import NetworkFeature from "../../classes/NetworkFeature";
@@ -21,9 +24,16 @@ function GridElement({ networkFeature, position }: Props) {
   const [showCtxMenu, setShowCtxMenu] = useState(false);
   const [clickable, setClickable] = useState(true);
 
+  const dispatch = useAppDispatch();
+  const selectedFeature = useAppSelector(selectSelectedFeature);
+
   const handleContextMenu = () => {
     setShowCtxMenu(!showCtxMenu);
     setClickable(false);
+  };
+
+  const handleClick = () => {
+    dispatch(elementChanged({ element: selectedFeature, position }));
   };
 
   const getClasses = (networkFeature: NetworkFeature) => {
@@ -44,7 +54,9 @@ function GridElement({ networkFeature, position }: Props) {
       //   networkFeature instanceof Link &&
       //   styles.justTransmittedLink) +
       " " +
-      (networkFeature.signals[0].corrupted && styles.corruptedLink);
+      (networkFeature.signals.length > 0 &&
+        networkFeature.signals[0].corrupted &&
+        styles.corruptedLink);
     return classes;
   };
 
@@ -60,7 +72,7 @@ function GridElement({ networkFeature, position }: Props) {
           if (e.buttons == 1 || e.buttons == 3) {
             e.stopPropagation();
 
-            // handleClick();
+            handleClick();
             setClicked(!clicked);
           }
         }
@@ -72,7 +84,7 @@ function GridElement({ networkFeature, position }: Props) {
       onMouseDown={(e) => {
         if (clickable) {
           if (e.buttons == 1 || e.buttons == 3) {
-            // handleClick();
+            handleClick();
             setClicked(!clicked);
             setShowCtxMenu(false);
           }

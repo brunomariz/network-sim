@@ -2,6 +2,10 @@ import React from "react";
 import { BsCircle, BsCircleFill, BsSquareFill } from "react-icons/bs";
 import { CgTrashEmpty } from "react-icons/cg";
 import { FiPause, FiPlay } from "react-icons/fi";
+import { getAir } from "../../model/air/getAir";
+import { getNode } from "../../model/node/getNode";
+import { getTwistedPair } from "../../model/twistedPair/getTwistedPair";
+import { selectedFeatureChanged } from "../../redux/features/cursor/cursorSlice";
 // import { networkFeatureCategories } from "../../@types/networkFeatureCategories";
 // import {
 //   clearElements,
@@ -97,24 +101,18 @@ function Navbar({}: Props) {
         outline
       ></NavButton>
 
-      {/* Empty button */}
+      {/* Air button */}
       <NavButton
         disabled={false}
         icon={<BsCircle></BsCircle>}
-        onClick={
-          () => {}
-          // dispatch(setCursorElement(networkFeatureCategories.Empty))
-        }
-        text="Empty"
+        onClick={() => dispatch(selectedFeatureChanged(getAir()))}
+        text="Air"
       ></NavButton>
 
       {/* TP button */}
       <NavButton
         text="Twisted Pair"
-        onClick={
-          () => {}
-          // dispatch(setCursorElement(networkFeatureCategories.TwistedPair))
-        }
+        onClick={() => dispatch(selectedFeatureChanged(getTwistedPair()))}
         disabled={false}
         icon={<BsCircleFill></BsCircleFill>}
       ></NavButton>
@@ -123,10 +121,7 @@ function Navbar({}: Props) {
       <NavButton
         disabled={false}
         icon={<BsSquareFill></BsSquareFill>}
-        onClick={
-          () => {}
-          // dispatch(setCursorElement(networkFeatureCategories.Node))
-        }
+        onClick={() => dispatch(selectedFeatureChanged(getNode()))}
         text="Node"
       ></NavButton>
     </div>

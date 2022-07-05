@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import cursorSlice from "./features/cursor/cursorSlice";
 import simulationReducer from "./features/simulation/simulationSlice";
 
 const store = configureStore({
   reducer: {
     simulation: simulationReducer,
+    cursor: cursorSlice,
   },
 });
 
