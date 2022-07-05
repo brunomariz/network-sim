@@ -58,6 +58,9 @@ export const simulationSlice = createSlice({
     //   const { row, column } = action.payload;
     //   state.grid[row][column].transmitting = false;
     // },
+    resetElements: (state) => {
+      state.grid = initialState.grid;
+    },
   },
 });
 
@@ -67,6 +70,7 @@ export const {
   elementChanged,
   // elementNotTransmitting,
   // elementTransmitting,
+  resetElements,
 } = simulationSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

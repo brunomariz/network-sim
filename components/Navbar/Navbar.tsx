@@ -14,6 +14,7 @@ import { selectedFeatureChanged } from "../../redux/features/cursor/cursorSlice"
 //   tick,
 // } from "../../redux/features/grid/gridSlice";
 import {
+  resetElements,
   selectRunning,
   start,
   stop,
@@ -62,7 +63,7 @@ function Navbar({}: Props) {
       <NavButton
         onClick={() => {
           dispatch(stop());
-          // dispatch(clearElements());
+          dispatch(resetElements());
         }}
         disabled={false}
         text="Clear"
