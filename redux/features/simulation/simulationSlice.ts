@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Air } from "../../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
+import { Position } from "../../../@types/utils/position";
 import { Signal } from "../../../@types/utils/singal";
 import type { RootState } from "../../store";
 
@@ -36,18 +37,32 @@ export const simulationSlice = createSlice({
     elementChanged: (
       state,
       action: PayloadAction<{
-        element: NetworkFeature;
+        networkFeature: NetworkFeature;
         position: { row: number; column: number };
       }>
     ) => {
       const { row, column } = action.payload.position;
-      const element = action.payload.element;
+      const element = action.payload.networkFeature;
       state.grid[row][column] = element;
+    },
+    elementTransmitting: (state, action: PayloadAction<Position>) => {
+      const { row, column } = action.payload;
+      state.grid[row][column].transmitting = true;
+    },
+    elementNotTransmitting: (state, action: PayloadAction<Position>) => {
+      const { row, column } = action.payload;
+      state.grid[row][column].transmitting = false;
     },
   },
 });
 
-export const { start, stop, elementChanged } = simulationSlice.actions;
+export const {
+  start,
+  stop,
+  elementChanged,
+  elementNotTransmitting,
+  elementTransmitting,
+} = simulationSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectRunning = (state: RootState) => state.simulation.running;

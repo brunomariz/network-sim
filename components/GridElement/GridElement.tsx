@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Air } from "../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../@types/networkFeatures/networkFeature";
 import { Position } from "../../@types/utils/position";
+import { isCorrupted } from "../../model/networkFeature/isCorrupted";
 import { selectSelectedFeature } from "../../redux/features/cursor/cursorSlice";
 import { elementChanged } from "../../redux/features/simulation/simulationSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -33,7 +34,7 @@ function GridElement({ networkFeature, position }: Props) {
   };
 
   const handleClick = () => {
-    dispatch(elementChanged({ element: selectedFeature, position }));
+    dispatch(elementChanged({ networkFeature: selectedFeature, position }));
   };
 
   const getClasses = (networkFeature: NetworkFeature) => {
@@ -54,9 +55,7 @@ function GridElement({ networkFeature, position }: Props) {
       //   networkFeature instanceof Link &&
       //   styles.justTransmittedLink) +
       " " +
-      (networkFeature.signals.length > 0 &&
-        networkFeature.signals[0].corrupted &&
-        styles.corruptedLink);
+      (isCorrupted(networkFeature) && styles.corruptedLink);
     return classes;
   };
 
@@ -104,6 +103,7 @@ function GridElement({ networkFeature, position }: Props) {
             ctxAnchorPoint={ctxAnchorPoint}
             networkFeature={networkFeature}
             setShowCtxMenu={setShowCtxMenu}
+            position={position}
           ></CtxMenu>
         )}
       </>

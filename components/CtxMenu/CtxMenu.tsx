@@ -2,6 +2,15 @@ import React from "react";
 import { Link } from "../../@types/networkFeatures/link";
 import { NetworkFeature } from "../../@types/networkFeatures/networkFeature";
 import { Coordinates } from "../../@types/utils/coordinates";
+import { Position } from "../../@types/utils/position";
+import { getSignal } from "../../model/networkFeature/getSignal";
+import { isCorrupted } from "../../model/networkFeature/isCorrupted";
+import {
+  elementChanged,
+  elementNotTransmitting,
+  elementTransmitting,
+} from "../../redux/features/simulation/simulationSlice";
+import { useAppDispatch } from "../../redux/hooks";
 // import { TransmissionStatus } from "../../@types/transmissionStatus";
 // import NetworkFeature from "../../classes/NetworkFeature";
 // import TwistedPair from "../../classes/TwistedPair";
@@ -10,9 +19,25 @@ type Props = {
   ctxAnchorPoint: Coordinates;
   networkFeature: NetworkFeature;
   setShowCtxMenu: Function;
+  position: Position;
 };
 
-function CtxMenu({ ctxAnchorPoint, networkFeature, setShowCtxMenu }: Props) {
+function CtxMenu({
+  ctxAnchorPoint,
+  networkFeature,
+  setShowCtxMenu,
+  position,
+}: Props) {
+  const dispatch = useAppDispatch();
+
+  const handleSetTransmissionClick = () => {
+    if (networkFeature.transmitting) {
+      dispatch(elementNotTransmitting(position));
+    } else {
+      dispatch(elementTransmitting(position));
+    }
+    setShowCtxMenu(false);
+  };
   return (
     <div
       style={{ top: ctxAnchorPoint.y - 2, left: ctxAnchorPoint.x - 2 }}
@@ -22,8 +47,8 @@ function CtxMenu({ ctxAnchorPoint, networkFeature, setShowCtxMenu }: Props) {
         {networkFeature.featureName}
       </h1>
       <div className="font-mono">
-        Signal: {networkFeature.signals[0].value} V
-        {networkFeature.signals[0].corrupted && (
+        Signal: {getSignal(networkFeature)} V
+        {isCorrupted(networkFeature) && (
           <div className="text-red-500">corrupted</div>
         )}
       </div>
@@ -41,14 +66,7 @@ function CtxMenu({ ctxAnchorPoint, networkFeature, setShowCtxMenu }: Props) {
 
       <button
         className="text-sm bg-slate-300 p-1 underline-offset-2 border-2 border-gray-900 border-opacity-0 hover:border-opacity-75"
-        onClick={() => {
-          if (networkFeature.transmitting) {
-            networkFeature.transmitting = false;
-          } else {
-            networkFeature.transmitting = true;
-          }
-          setShowCtxMenu(false);
-        }}
+        onClick={() => handleSetTransmissionClick()}
       >
         Set Transmission {networkFeature.transmitting ? "Off" : "On"}
       </button>
