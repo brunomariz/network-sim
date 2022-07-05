@@ -9,6 +9,9 @@ import { selectGrid } from "../../redux/features/simulation/simulationSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import GridElement from "../GridElement/GridElement";
 import sytles from "./grid.module.css";
+import React from "react";
+import ReactDOM from "react-dom";
+
 type Props = {};
 
 function Grid({}: Props) {

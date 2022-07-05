@@ -1,4 +1,4 @@
-import { Link } from "../../@types/networkFeatures/link";
+import { Link } from "../../../@types/networkFeatures/link";
 
 export const getLink = () => {
   return {

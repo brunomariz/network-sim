@@ -1,5 +1,5 @@
-import { Link } from "../../@types/networkFeatures/link";
-import { NetworkFeature } from "../../@types/networkFeatures/networkFeature";
+import { Link } from "../../../@types/networkFeatures/link";
+import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
 
 const tick = (
   elements: NetworkFeature[][],
