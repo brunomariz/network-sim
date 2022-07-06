@@ -3,6 +3,7 @@ import { TwistedPair } from "../../../@types/networkFeatures/twistedPair";
 import { Direction } from "../../../@types/utils/direction";
 import { Position } from "../../../@types/utils/position";
 import { Signal } from "../../../@types/utils/singal";
+import { signalStrength } from "../networkFeature/signalStrength";
 
 export const tickTwistedPair = (
   elements: NetworkFeature[][],
@@ -21,13 +22,13 @@ export const tickTwistedPair = (
       JSON.stringify(elements[row - 1][column])
     ) as NetworkFeature;
 
-    neighbor.signals.forEach((signal) => {
-      // Append signals that didnt come from below
-      if (signal.fromDirection != Direction.bottom) {
-        signal.fromDirection = Direction.up;
-        newTwistedPair.signals.push(signal);
-      }
-    });
+    // Get new signals from neighbors
+    const newSignals = validNeighborSignals(
+      neighbor,
+      Direction.bottom,
+      Direction.up
+    );
+    newTwistedPair.signals.push(...newSignals);
   }
 
   // Update based on neighbor to the right
@@ -36,13 +37,13 @@ export const tickTwistedPair = (
       JSON.stringify(elements[row][column + 1])
     ) as NetworkFeature;
 
-    neighbor.signals.forEach((signal) => {
-      // Append signals that didnt come from the left
-      if (signal.fromDirection != Direction.left) {
-        signal.fromDirection = Direction.right;
-        newTwistedPair.signals.push(signal);
-      }
-    });
+    // Get new signals from neighbors
+    const newSignals = validNeighborSignals(
+      neighbor,
+      Direction.left,
+      Direction.right
+    );
+    newTwistedPair.signals.push(...newSignals);
   }
 
   // Update based on neighbor below
@@ -51,13 +52,13 @@ export const tickTwistedPair = (
       JSON.stringify(elements[row + 1][column])
     ) as NetworkFeature;
 
-    neighbor.signals.forEach((signal) => {
-      // Append signals that didnt come from above
-      if (signal.fromDirection != Direction.up) {
-        signal.fromDirection = Direction.bottom;
-        newTwistedPair.signals.push(signal);
-      }
-    });
+    // Get new signals from neighbors
+    const newSignals = validNeighborSignals(
+      neighbor,
+      Direction.up,
+      Direction.bottom
+    );
+    newTwistedPair.signals.push(...newSignals);
   }
 
   // Update based on neighbor to the left
@@ -66,14 +67,33 @@ export const tickTwistedPair = (
       JSON.stringify(elements[row][column - 1])
     ) as NetworkFeature;
 
-    neighbor.signals.forEach((signal) => {
-      // Append signals that didnt come from the right
-      if (signal.fromDirection != Direction.right) {
-        signal.fromDirection = Direction.left;
-        newTwistedPair.signals.push(signal);
-      }
-    });
+    // Get new signals from neighbors
+    const newSignals = validNeighborSignals(
+      neighbor,
+      Direction.right,
+      Direction.left
+    );
+    newTwistedPair.signals.push(...newSignals);
   }
 
   return newTwistedPair;
+};
+
+const validNeighborSignals = (
+  neighbor: NetworkFeature,
+  directionFilter: Direction,
+  newDirection: Direction
+) => {
+  const validSignals: Signal[] = [];
+  if (signalStrength(neighbor) != 0) {
+    neighbor.signals.forEach((signal) => {
+      // Append signals that didnt come from the directionFilter direction
+      if (signal.fromDirection != directionFilter) {
+        // Set new direction for signal
+        signal.fromDirection = newDirection;
+        validSignals.push(signal);
+      }
+    });
+  }
+  return validSignals;
 };

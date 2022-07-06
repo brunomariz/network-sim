@@ -3,6 +3,7 @@ import { Air } from "../../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
 import { Signal } from "../../../@types/utils/singal";
 import Grid from "../../../components/Grid/Grid";
+import { getAir } from "../../../model/networkFeatures/air/getAir";
 import { tickTwistedPair } from "../../../model/networkFeatures/twistedPair/tickTwistedPair";
 import type { RootState } from "../../store";
 
@@ -12,18 +13,13 @@ interface SimulationState {
   grid: NetworkFeature[][];
 }
 
-const initialRows = 3;
-const initialColumns = 1;
+const initialRows = 10;
+const initialColumns = 15;
 
 // Define the initial state using that type
 const initialState: SimulationState = {
   running: false,
-  grid: new Array(initialColumns).fill(
-    new Array(initialRows).fill({
-      featureName: "Air",
-      signals: [{} as Signal],
-    } as Air)
-  ),
+  grid: new Array(initialRows).fill(new Array(initialColumns).fill(getAir())),
 };
 
 export const simulationSlice = createSlice({
