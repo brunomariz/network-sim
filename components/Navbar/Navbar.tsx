@@ -18,6 +18,7 @@ import {
   selectRunning,
   start,
   stop,
+  tick,
 } from "../../redux/features/simulation/simulationSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
@@ -95,7 +96,7 @@ function Navbar({}: Props) {
       <NavButton
         text="Tick"
         onClick={() => {
-          // dispatch(tick());
+          dispatch(tick());
         }}
         disabled={running}
         icon={<></>}

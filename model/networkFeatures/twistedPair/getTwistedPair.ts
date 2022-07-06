@@ -5,6 +5,6 @@ export const getTwistedPair = () => {
     featureName: "TwistedPair",
     bitErrorRate: 10e-6,
     signals: [],
-    transmitting: false,
+    // transmitting: false,
   } as TwistedPair;
 };

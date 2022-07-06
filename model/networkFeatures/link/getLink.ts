@@ -5,6 +5,6 @@ export const getLink = () => {
     bitErrorRate: 0.1,
     featureName: "Link",
     signals: [],
-    transmitting: false,
+    // transmitting: false,
   } as Link;
 };

@@ -1,7 +1,9 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { Air } from "../../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
 import { Signal } from "../../../@types/utils/singal";
+import Grid from "../../../components/Grid/Grid";
+import { tickTwistedPair } from "../../../model/networkFeatures/twistedPair/tickTwistedPair";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
@@ -10,14 +12,14 @@ interface SimulationState {
   grid: NetworkFeature[][];
 }
 
-const initialRows = 10;
-const initialColumns = 25;
+const initialRows = 3;
+const initialColumns = 1;
 
 // Define the initial state using that type
 const initialState: SimulationState = {
   running: false,
-  grid: new Array(initialRows).fill(
-    new Array(initialColumns).fill({
+  grid: new Array(initialColumns).fill(
+    new Array(initialRows).fill({
       featureName: "Air",
       signals: [{} as Signal],
     } as Air)
@@ -61,6 +63,31 @@ export const simulationSlice = createSlice({
     resetElements: (state) => {
       state.grid = initialState.grid;
     },
+
+    tick: (state) => {
+      const auxGrid = [
+        ...state.grid.map((row) => {
+          return [...row];
+        }),
+      ];
+
+      for (let row = 0; row < state.grid.length; row++) {
+        for (let column = 0; column < state.grid[0].length; column++) {
+          switch (state.grid[row][column].featureName) {
+            case "TwistedPair":
+              auxGrid[row][column] = tickTwistedPair(current(state.grid), {
+                row,
+                column,
+              });
+              break;
+
+            default:
+              break;
+          }
+        }
+      }
+      state.grid = auxGrid;
+    },
   },
 });
 
@@ -71,6 +98,7 @@ export const {
   // elementNotTransmitting,
   // elementTransmitting,
   resetElements,
+  tick,
 } = simulationSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

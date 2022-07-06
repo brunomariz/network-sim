@@ -2,60 +2,77 @@ import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
 import { TwistedPair } from "../../../@types/networkFeatures/twistedPair";
 import { Direction } from "../../../@types/utils/direction";
 import { Position } from "../../../@types/utils/position";
+import { Signal } from "../../../@types/utils/singal";
 
 export const tickTwistedPair = (
   elements: NetworkFeature[][],
   position: Position
 ): TwistedPair => {
   const { row, column } = position;
-
-  const newTwistedPair = { ...elements[row][column] } as TwistedPair;
-
+  const newTwistedPair = {
+    ...elements[row][column],
+    signals: [],
+  } as TwistedPair;
   let neighbor: NetworkFeature;
+
   // Update based on neighbor above
   if (row > 0) {
-    neighbor = elements[row - 1][column];
-    // Append signals that didnt come from below
-    newTwistedPair.signals = [
-      ...newTwistedPair.signals,
-      ...neighbor.signals.filter(
-        (item) => item.fromDirection != Direction.bottom
-      ),
-    ];
+    neighbor = JSON.parse(
+      JSON.stringify(elements[row - 1][column])
+    ) as NetworkFeature;
+
+    neighbor.signals.forEach((signal) => {
+      // Append signals that didnt come from below
+      if (signal.fromDirection != Direction.bottom) {
+        signal.fromDirection = Direction.up;
+        newTwistedPair.signals.push(signal);
+      }
+    });
   }
 
   // Update based on neighbor to the right
   if (elements.length > 0 && column < elements[0].length - 1) {
-    neighbor = elements[row][column + 1];
-    // Append signals that didnt come from the left
-    newTwistedPair.signals = [
-      ...newTwistedPair.signals,
-      ...neighbor.signals.filter(
-        (item) => item.fromDirection != Direction.left
-      ),
-    ];
+    neighbor = JSON.parse(
+      JSON.stringify(elements[row][column + 1])
+    ) as NetworkFeature;
+
+    neighbor.signals.forEach((signal) => {
+      // Append signals that didnt come from the left
+      if (signal.fromDirection != Direction.left) {
+        signal.fromDirection = Direction.right;
+        newTwistedPair.signals.push(signal);
+      }
+    });
   }
 
   // Update based on neighbor below
   if (row < elements.length - 1) {
-    neighbor = elements[row + 1][column];
-    // Append signals that didnt come from above
-    newTwistedPair.signals = [
-      ...newTwistedPair.signals,
-      ...neighbor.signals.filter((item) => item.fromDirection != Direction.up),
-    ];
+    neighbor = JSON.parse(
+      JSON.stringify(elements[row + 1][column])
+    ) as NetworkFeature;
+
+    neighbor.signals.forEach((signal) => {
+      // Append signals that didnt come from above
+      if (signal.fromDirection != Direction.up) {
+        signal.fromDirection = Direction.bottom;
+        newTwistedPair.signals.push(signal);
+      }
+    });
   }
 
   // Update based on neighbor to the left
-  if (row < elements.length - 1) {
-    neighbor = elements[row + 1][column];
-    // Append signals that didnt come from the right
-    newTwistedPair.signals = [
-      ...newTwistedPair.signals,
-      ...neighbor.signals.filter(
-        (item) => item.fromDirection != Direction.right
-      ),
-    ];
+  if (column > 0) {
+    neighbor = JSON.parse(
+      JSON.stringify(elements[row][column - 1])
+    ) as NetworkFeature;
+
+    neighbor.signals.forEach((signal) => {
+      // Append signals that didnt come from the right
+      if (signal.fromDirection != Direction.right) {
+        signal.fromDirection = Direction.left;
+        newTwistedPair.signals.push(signal);
+      }
+    });
   }
 
   return newTwistedPair;
