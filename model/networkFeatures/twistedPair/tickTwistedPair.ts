@@ -3,12 +3,13 @@ import { TwistedPair } from "../../../@types/networkFeatures/twistedPair";
 import { Direction } from "../../../@types/utils/direction";
 import { Position } from "../../../@types/utils/position";
 import { Signal } from "../../../@types/utils/singal";
+import { ITickFunctionParams } from "../../../@types/utils/tickFunctionInterface";
 import { signalStrength } from "../networkFeature/signalStrength";
 
-export const tickTwistedPair = (
-  elements: NetworkFeature[][],
-  position: Position
-): TwistedPair => {
+export const tickTwistedPair = ({
+  elements,
+  position,
+}: ITickFunctionParams): TwistedPair => {
   const { row, column } = position;
   const newTwistedPair = {
     ...elements[row][column],

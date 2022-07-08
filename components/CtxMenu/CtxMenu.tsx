@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "../../@types/networkFeatures/link";
 import { NetworkFeature } from "../../@types/networkFeatures/networkFeature";
+import { Node } from "../../@types/networkFeatures/node";
 import { Coordinates } from "../../@types/utils/coordinates";
 import { Position } from "../../@types/utils/position";
 import { Signal } from "../../@types/utils/singal";
@@ -33,20 +34,50 @@ function CtxMenu({
   const dispatch = useAppDispatch();
 
   const handleSetTransmissionClick = () => {
+    const transmissor = { transmitting: false };
     if (networkFeature.signals.length > 0) {
-      dispatch(
-        elementChanged({
-          networkFeature: { ...networkFeature, signals: [] },
-          position,
-        })
-      );
+      if ("transmitting" in networkFeature) {
+        dispatch(
+          elementChanged({
+            networkFeature: {
+              ...networkFeature,
+              transmitting: false,
+              signals: [],
+            },
+            position,
+          })
+        );
+      } else {
+        dispatch(
+          elementChanged({
+            networkFeature: { ...networkFeature, signals: [] },
+            position,
+          })
+        );
+      }
     } else {
-      dispatch(
-        elementChanged({
-          networkFeature: { ...networkFeature, signals: [getSignal()] },
-          position,
-        })
-      );
+      if ("transmitting" in networkFeature) {
+        dispatch(
+          elementChanged({
+            networkFeature: {
+              ...networkFeature,
+              transmitting: true,
+              signals: [getSignal()],
+            },
+            position,
+          })
+        );
+      } else {
+        dispatch(
+          elementChanged({
+            networkFeature: {
+              ...networkFeature,
+              signals: [getSignal()],
+            },
+            position,
+          })
+        );
+      }
     }
     setShowCtxMenu(false);
   };
@@ -64,6 +95,11 @@ function CtxMenu({
           <div className="text-red-500">corrupted</div>
         )}
       </div>
+      {"transmitting" in networkFeature && (
+        <div className="font-mono">
+          Transmitting: {networkFeature.transmitting.toString()}
+        </div>
+      )}
       {networkFeature.featureName == "TwistedPair" && (
         <div className="font-mono">
           <ul>

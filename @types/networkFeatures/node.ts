@@ -1,3 +1,3 @@
 import { BaseFeature } from "./baseFeature";
 
-export type Node = BaseFeature & {};
+export type Node = BaseFeature & { transmitting: boolean };

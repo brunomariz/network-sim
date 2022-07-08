@@ -2,8 +2,13 @@ import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { Air } from "../../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
 import { Signal } from "../../../@types/utils/singal";
+import {
+  ITickFunction,
+  ITickFunctionParams,
+} from "../../../@types/utils/tickFunctionInterface";
 import Grid from "../../../components/Grid/Grid";
 import { getAir } from "../../../model/networkFeatures/air/getAir";
+import { tickNode } from "../../../model/networkFeatures/node/tickNode";
 import { tickTwistedPair } from "../../../model/networkFeatures/twistedPair/tickTwistedPair";
 import type { RootState } from "../../store";
 
@@ -71,11 +76,23 @@ export const simulationSlice = createSlice({
         for (let column = 0; column < state.grid[0].length; column++) {
           switch (state.grid[row][column].featureName) {
             case "TwistedPair":
-              auxGrid[row][column] = tickTwistedPair(current(state.grid), {
-                row,
-                column,
+              auxGrid[row][column] = tickTwistedPair({
+                elements: current(state.grid),
+                position: {
+                  row,
+                  column,
+                },
               });
               break;
+
+            case "Node":
+              auxGrid[row][column] = tickNode({
+                elements: current(state.grid),
+                position: {
+                  row,
+                  column,
+                },
+              });
 
             default:
               break;
