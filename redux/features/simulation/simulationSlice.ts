@@ -10,6 +10,7 @@ import Grid from "../../../components/Grid/Grid";
 import { getAir } from "../../../model/networkFeatures/air/getAir";
 import { tickNode } from "../../../model/networkFeatures/node/tickNode";
 import { tickTwistedPair } from "../../../model/networkFeatures/twistedPair/tickTwistedPair";
+import { generateTemplate } from "../../../model/utils/templates/generateTemplate";
 import type { RootState } from "../../store";
 
 // Define a type for the slice state
@@ -61,8 +62,23 @@ export const simulationSlice = createSlice({
     //   const { row, column } = action.payload;
     //   state.grid[row][column].transmitting = false;
     // },
-    resetElements: (state) => {
-      state.grid = initialState.grid;
+    resetElements: (
+      state,
+      action: PayloadAction<"icon" | "stripes" | "initial">
+    ) => {
+      state.grid = new Array(initialRows).fill(
+        new Array(initialColumns).fill(getAir())
+      );
+      if (action.payload == "initial") {
+        state.grid = initialState.grid;
+      } else {
+        state.grid = generateTemplate(state.grid, action.payload);
+      }
+    },
+    clearElements: (state) => {
+      state.grid = new Array(initialRows).fill(
+        new Array(initialColumns).fill(getAir())
+      );
     },
 
     tick: (state) => {
@@ -111,6 +127,7 @@ export const {
   // elementNotTransmitting,
   // elementTransmitting,
   resetElements,
+  clearElements,
   tick,
 } = simulationSlice.actions;
 

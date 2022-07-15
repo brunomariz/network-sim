@@ -14,6 +14,7 @@ import { selectedFeatureChanged } from "../../redux/features/cursor/cursorSlice"
 //   tick,
 // } from "../../redux/features/grid/gridSlice";
 import {
+  clearElements,
   resetElements,
   selectRunning,
   start,
@@ -47,13 +48,13 @@ function Navbar({}: Props) {
           {
             title: "Icon",
             onClick: () => {
-              // dispatch(resetNetwork("icon"));
+              dispatch(resetElements("icon"));
             },
           },
           {
             title: "Stripes",
             onClick: () => {
-              // dispatch(resetNetwork("stripes"));
+              dispatch(resetElements("stripes"));
             },
           },
         ]}
@@ -64,7 +65,7 @@ function Navbar({}: Props) {
       <NavButton
         onClick={() => {
           dispatch(stop());
-          dispatch(resetElements());
+          dispatch(clearElements());
         }}
         disabled={false}
         text="Clear"
