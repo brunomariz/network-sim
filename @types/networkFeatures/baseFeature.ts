@@ -1,4 +1,4 @@
-import { Signal } from "../utils/singal";
+import { Signal } from "../utils/signal";
 
 export type BaseFeature = {
   readonly featureName: "Node" | "Air" | "Link" | "TwistedPair";

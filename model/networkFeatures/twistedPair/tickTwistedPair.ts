@@ -2,8 +2,9 @@ import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
 import { TwistedPair } from "../../../@types/networkFeatures/twistedPair";
 import { Direction } from "../../../@types/utils/direction";
 import { Position } from "../../../@types/utils/position";
-import { Signal } from "../../../@types/utils/singal";
+import { Signal } from "../../../@types/utils/signal";
 import { ITickFunctionParams } from "../../../@types/utils/tickFunctionInterface";
+import { berPerElement } from "../../../constants/networkFeatures/twistedPair/twistedPairConstants";
 import { signalStrength } from "../networkFeature/signalStrength";
 
 export const tickTwistedPair = ({
@@ -77,6 +78,9 @@ export const tickTwistedPair = ({
     newTwistedPair.signals.push(...newSignals);
   }
 
+  // Apply noise to signals based on bit error rate
+  newTwistedPair.signals = applyNoise(newTwistedPair.signals);
+
   return newTwistedPair;
 };
 
@@ -97,4 +101,14 @@ const validNeighborSignals = (
     });
   }
   return validSignals;
+};
+
+const applyNoise = (signals: Signal[]) => {
+  return signals.map((signal) => {
+    const random = Math.floor(Math.random() / berPerElement);
+    if (random == 0) {
+      return { ...signal, corrupted: true, value: signal.value + 1 };
+    }
+    return signal;
+  });
 };

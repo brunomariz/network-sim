@@ -1,7 +1,7 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { Air } from "../../../@types/networkFeatures/air";
 import { NetworkFeature } from "../../../@types/networkFeatures/networkFeature";
-import { Signal } from "../../../@types/utils/singal";
+import { Signal } from "../../../@types/utils/signal";
 import {
   ITickFunction,
   ITickFunctionParams,

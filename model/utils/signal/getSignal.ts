@@ -1,5 +1,5 @@
 import { Direction } from "../../../@types/utils/direction";
-import { Signal } from "../../../@types/utils/singal";
+import { Signal } from "../../../@types/utils/signal";
 
 export const getSignal = () => {
   return {

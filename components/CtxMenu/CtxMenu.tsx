@@ -4,7 +4,8 @@ import { NetworkFeature } from "../../@types/networkFeatures/networkFeature";
 import { Node } from "../../@types/networkFeatures/node";
 import { Coordinates } from "../../@types/utils/coordinates";
 import { Position } from "../../@types/utils/position";
-import { Signal } from "../../@types/utils/singal";
+import { Signal } from "../../@types/utils/signal";
+import { berPerMaxLength } from "../../constants/networkFeatures/twistedPair/twistedPairConstants";
 import { isCorrupted } from "../../model/networkFeatures/networkFeature/isCorrupted";
 import { signalStrength } from "../../model/networkFeatures/networkFeature/signalStrength";
 import { getSignal } from "../../model/utils/signal/getSignal";
@@ -103,10 +104,7 @@ function CtxMenu({
       {networkFeature.featureName == "TwistedPair" && (
         <div className="font-mono">
           <ul>
-            <li>
-              BER (per element):{" "}
-              {(networkFeature as Link).bitErrorRate.toExponential()}
-            </li>
+            <li>BER (per element): {berPerMaxLength.toExponential()}</li>
             <li>BER (per 100 m): {(10e-2).toExponential()}</li>
           </ul>
         </div>
