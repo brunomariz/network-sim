@@ -72,16 +72,6 @@ function Navbar({}: Props) {
         icon={<CgTrashEmpty></CgTrashEmpty>}
       ></NavButton>
 
-      {/* Stop button */}
-      <NavButton
-        onClick={() => {
-          dispatch(stop());
-        }}
-        disabled={!running}
-        text="Stop"
-        icon={<FiPause></FiPause>}
-      ></NavButton>
-
       {/* Start button */}
       <NavButton
         onClick={() => {
@@ -91,6 +81,16 @@ function Navbar({}: Props) {
         text="Start"
         icon={<FiPlay></FiPlay>}
         fill
+      ></NavButton>
+
+      {/* Stop button */}
+      <NavButton
+        onClick={() => {
+          dispatch(stop());
+        }}
+        disabled={!running}
+        text="Stop"
+        icon={<FiPause></FiPause>}
       ></NavButton>
 
       {/* Tick button */}

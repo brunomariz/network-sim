@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import {
   selectRunning,
   start,
   stop,
+  tick,
 } from "../../redux/features/simulation/simulationSlice";
 import Navbar from "../Navbar/Navbar";
 import Grid from "../Grid/Grid";
@@ -13,6 +14,19 @@ type Props = {};
 function NetworkSim({}: Props) {
   const dispatch = useAppDispatch();
   const running = useAppSelector(selectRunning);
+
+  const newIntervalId = setInterval(() => {
+    if (running) {
+      // setElements(network.tick().elements);
+      dispatch(tick());
+    }
+  }, 25);
+
+  // Clear intervals
+  for (let i = 1; i < Number(newIntervalId); i++) {
+    clearInterval(i);
+  }
+
   return (
     <>
       <Navbar></Navbar>
