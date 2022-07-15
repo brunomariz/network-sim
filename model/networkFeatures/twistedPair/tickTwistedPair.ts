@@ -79,7 +79,7 @@ export const tickTwistedPair = ({
   }
 
   // Apply noise to signals based on bit error rate
-  newTwistedPair.signals = applyNoise(newTwistedPair.signals);
+  // newTwistedPair.signals = applyNoise(newTwistedPair.signals);
 
   return newTwistedPair;
 };
@@ -103,12 +103,12 @@ const validNeighborSignals = (
   return validSignals;
 };
 
-const applyNoise = (signals: Signal[]) => {
-  return signals.map((signal) => {
-    const random = Math.floor(Math.random() / berPerElement);
-    if (random == 0) {
-      return { ...signal, corrupted: true, value: signal.value + 1 };
-    }
-    return signal;
-  });
-};
+// const applyNoise = (signals: Signal[]) => {
+//   return signals.map((signal) => {
+//     const random = Math.floor(Math.random() / berPerElement);
+//     if (random == 0) {
+//       return { ...signal, corrupted: true, value: signal.value + 1 };
+//     }
+//     return signal;
+//   });
+// };
