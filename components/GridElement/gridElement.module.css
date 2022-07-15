@@ -29,7 +29,7 @@
   @apply opacity-100;
 }
 .corruptedLink {
-  filter: invert(100%);
+  filter: hue-rotate(180deg) brightness(150%);
 }
 
 .animate {
