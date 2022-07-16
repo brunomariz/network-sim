@@ -8,6 +8,7 @@ import {
 } from "../../redux/features/simulation/simulationSlice";
 import Navbar from "../Navbar/Navbar";
 import Grid from "../Grid/Grid";
+import GridProperties from "../GridProperties/GridProperties";
 
 type Props = {};
 
@@ -30,8 +31,11 @@ function NetworkSim({}: Props) {
   return (
     <>
       <Navbar></Navbar>
-      <div className="overflow-scoll pt-20 px-2 h-full min-h-screen flex justify-center items-center min-w-max bg-gray-100">
-        <Grid></Grid>
+      <div className="bg-gray-100 pt-20 h-full min-h-screen">
+        <GridProperties></GridProperties>
+        <div className="overflow-scoll px-2  flex justify-center items-center min-w-max">
+          <Grid></Grid>
+        </div>
       </div>
     </>
   );

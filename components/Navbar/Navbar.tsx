@@ -1,5 +1,10 @@
 import React from "react";
-import { BsCircle, BsCircleFill, BsSquareFill } from "react-icons/bs";
+import {
+  BsCircle,
+  BsCircleFill,
+  BsSquareFill,
+  BsPlusCircle,
+} from "react-icons/bs";
 import { CgTrashEmpty } from "react-icons/cg";
 import { FiPause, FiPlay } from "react-icons/fi";
 import { getAir } from "../../model/networkFeatures/air/getAir";
@@ -17,9 +22,11 @@ import {
   clearElements,
   resetElements,
   selectRunning,
+  rowsChanged,
   start,
   stop,
   tick,
+  selectGrid,
 } from "../../redux/features/simulation/simulationSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
@@ -61,17 +68,6 @@ function Navbar({}: Props) {
         title="Network Templates"
       ></DropdownMenu>
 
-      {/* Clear Button */}
-      <NavButton
-        onClick={() => {
-          dispatch(stop());
-          dispatch(clearElements());
-        }}
-        disabled={false}
-        text="Clear"
-        icon={<CgTrashEmpty></CgTrashEmpty>}
-      ></NavButton>
-
       {/* Start button */}
       <NavButton
         onClick={() => {
@@ -102,6 +98,17 @@ function Navbar({}: Props) {
         disabled={running}
         icon={<></>}
         outline
+      ></NavButton>
+
+      {/* Clear Button */}
+      <NavButton
+        onClick={() => {
+          dispatch(stop());
+          dispatch(clearElements());
+        }}
+        disabled={false}
+        text="Clear"
+        icon={<CgTrashEmpty></CgTrashEmpty>}
       ></NavButton>
 
       {/* Air button */}

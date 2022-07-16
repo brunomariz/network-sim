@@ -25,8 +25,8 @@ export const generateIcon = (elements: NetworkFeature[][]) => {
   ];
   if (copyElements.length > 6 && copyElements[0].length > 12) {
     copyElements[1][6] = getNode();
-    copyElements[5][3] = getNode();
-    copyElements[5][9] = getNode();
+    copyElements[5][3] = getNode({ transmitting: false });
+    copyElements[5][9] = getNode({ transmitting: false });
     for (let i = 1; i < 12; i++) {
       copyElements[3][i] = getTwistedPair();
     }

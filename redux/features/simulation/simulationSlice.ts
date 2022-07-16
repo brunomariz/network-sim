@@ -117,6 +117,24 @@ export const simulationSlice = createSlice({
       }
       state.grid = auxGrid;
     },
+    rowsChanged: (state, action: PayloadAction<number>) => {
+      const rows = action.payload;
+      const stateRows = state.grid.length;
+      const stateColumns = state.grid[0].length;
+      // If rows got bigger
+      if (rows > stateRows) {
+        // Add rows
+        for (let index = 0; index < rows - stateRows; index++) {
+          state.grid.push(new Array(stateColumns).fill(getAir()));
+        }
+        new Array(initialRows).fill(getAir());
+      }
+      // If rows got smaller
+      else {
+        // Remove rows
+        state.grid = state.grid.slice(0, rows);
+      }
+    },
   },
 });
 
@@ -129,6 +147,7 @@ export const {
   resetElements,
   clearElements,
   tick,
+  rowsChanged,
 } = simulationSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

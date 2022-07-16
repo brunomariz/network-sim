@@ -16,6 +16,7 @@ type Props = {};
 
 function Grid({}: Props) {
   const grid = useAppSelector(selectGrid);
+  console.log(grid);
 
   return (
     <div
